@@ -1,0 +1,9 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Type=Application
+Name=To Get Math Table
+Comment=Generate multiplication tables
+Exec=/home/madhav/ToGetMathTable/build/appToGetMathTable
+Icon=accessories-calculator
+Terminal=false
+Categories=Education;Math;Qt;
