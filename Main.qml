@@ -21,7 +21,7 @@ ApplicationWindow {
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: root.pageMargin
-        spacing: 80
+        spacing: 18
 
         Label {
             text: qsTr("Math Table")
