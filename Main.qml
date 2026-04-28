@@ -21,7 +21,7 @@ ApplicationWindow {
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: root.pageMargin
-        spacing: 18
+        spacing: 80
 
         Label {
             text: qsTr("Math Table")
@@ -37,8 +37,9 @@ ApplicationWindow {
             placeholderText: qsTr("Enter number")
             inputMethodHints: Qt.ImhFormattedNumbersOnly
             font.pixelSize: 20
-            selectByMouse: true
+            selectByMouse: false
             onAccepted: genButton.clicked()
+            cursorVisible: false
         }
 
         RowLayout {
