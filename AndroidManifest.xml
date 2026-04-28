@@ -1,0 +1,20 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.madhav.togetmathtable">
+
+    <application
+        android:label="To Get Math Table"
+        android:icon="@drawable/icon">
+
+        <activity
+            android:name="org.qtproject.qt.android.bindings.QtActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+    </application>
+
+</manifest>

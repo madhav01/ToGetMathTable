@@ -11,6 +11,8 @@ find_package(Qt6 REQUIRED COMPONENTS Quick)
 
 qt_standard_project_setup(REQUIRES 6.10)
 
+set(QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
+
 qt_add_executable(appToGetMathTable
     main.cpp
 )
@@ -33,7 +35,8 @@ set_target_properties(appToGetMathTable PROPERTIES
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
-    QT_ANDROID_APP_NAME "To Get Math Table"
+    QT_ANDROID_APP_NAME "ToGetMathTable"
+    QT_ANDROID_APP_ICON "@mipmap/ic_launcher"
     QT_ANDROID_PACKAGE_NAME "com.madhav.togetmathtable"
     QT_ANDROID_VERSION_CODE 1
     QT_ANDROID_VERSION_NAME ${PROJECT_VERSION}
