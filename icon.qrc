@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>icon.png</file>
         <file>MathTablePage.qml</file>
+        <file>FactorialPage.qml</file>
     </qresource>
 </RCC>

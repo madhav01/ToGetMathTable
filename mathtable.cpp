@@ -26,3 +26,6 @@ void MathTable::generateTable(const QString &input){
     m_result = table;
     emit resultChanged();
 }
+QString MathTable::factorial(const QString &input){
+
+}
