@@ -37,9 +37,8 @@ ApplicationWindow {
             placeholderText: qsTr("Enter number")
             inputMethodHints: Qt.ImhFormattedNumbersOnly
             font.pixelSize: 20
-            selectByMouse: false
+            selectByMouse: true
             onAccepted: genButton.clicked()
-            cursorVisible: false
         }
 
         RowLayout {
