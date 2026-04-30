@@ -1,5 +1,6 @@
 import QtQuick
 import QtQuick.Controls
+// import QtQuick.Controls.Material
 import QtQuick.Layouts
 ApplicationWindow {
 
@@ -9,6 +10,7 @@ ApplicationWindow {
     visible: true
     title: qsTr("GetMathTable")
     color: "#f6f7fb"
+    Material.theme: Material.Light
 
     //Top ToolBar (App Bar)
     header: ToolBar{
@@ -17,7 +19,9 @@ ApplicationWindow {
             anchors.fill: parent
             // 🍔 Hamburger menu button
             ToolButton{
-                text: "☰"
+                icon.source: "qrc:/humburggerIcon.png"
+                icon.width: 24
+                icon.height: 24
                 onClicked: drawer.open()//open side menu
             }
             // Title in center (dynamic based on current page)
@@ -33,14 +37,14 @@ ApplicationWindow {
     //SIDE DRAWER (Menu)
     Drawer{
         id:drawer
-
+        edge: Qt.LeftEdge
         width: root.width * 0.7// Drawer width = 70% of screen
 
 
         //vertical menu layout
-        Item {
+        Pane {
             anchors.fill: parent
-            anchors.margins: 10//act like padding
+            spacing: 10
 
             ColumnLayout{
                 anchors.fill: parent
