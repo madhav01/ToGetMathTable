@@ -22,6 +22,11 @@ qt_add_qml_module(appToGetMathTable
     VERSION 1.0
     QML_FILES
         Main.qml
+        DesignTokens.qml
+        PremiumButton.qml
+        PremiumTextField.qml
+        ResultCard.qml
+        DrawerNavItem.qml
         SOURCES mathtable.h mathtable.cpp
         RESOURCES icon.qrc
 )

@@ -3,94 +3,140 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import ToGetMathTable 1.0
 
-Page{
-    id:root
+Page {
+    id: root
     title: "Math Table"
+    color: theme.appBackground
 
+    // Backend object that generates the multiplication table text.
     MathTable {
         id: math
     }
-    property bool showResult: false
-    readonly property int pageMargin: 20
 
+    DesignTokens {
+        id: theme
+    }
+
+    // Screen state: controls whether the result card shows data or an empty state.
+    property bool showResult: false
+
+    // Main page layout: input, actions, and result surface.
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: root.pageMargin
-        spacing: 18
+        anchors.margins: theme.pageMargin
+        spacing: theme.blockSpacing
 
-        TextField {
+        // Number input: styled field with numeric keyboard hints.
+        PremiumTextField {
             id: inputField
             Layout.fillWidth: true
             placeholderText: qsTr("Enter number")
             inputMethodHints: Qt.ImhFormattedNumbersOnly
-            font.pixelSize: 20
             selectByMouse: true
             onAccepted: genButton.clicked()
         }
 
+        // Action row: primary action expands, secondary action stays compact.
         RowLayout {
             Layout.fillWidth: true
             spacing: 12
 
-            Button {
+            PremiumButton {
                 id: genButton
                 text: qsTr("Generate")
+                variant: "primary"
                 Layout.fillWidth: true
-                Layout.preferredHeight: 48
+
                 onClicked: {
                     if (inputField.text.length === 0) {
                         showResult = false
                         return
                     }
+
                     resultText.text = math.generateTable(inputField.text)
                     showResult = true
                 }
             }
 
-            Button {
+            PremiumButton {
                 id: clear
                 text: qsTr("Clear")
-                Layout.preferredWidth: 104
-                Layout.preferredHeight: 48
+                variant: "secondary"
+                Layout.preferredWidth: 110
+
                 onClicked: {
                     inputField.clear()
-                    resultText.text=""
+                    resultText.text = ""
                     showResult = false
                 }
             }
         }
 
-        Rectangle {
+        // Result card: always visible so the page keeps a complete app structure.
+        ResultCard {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            visible: showResult
-            color: "white"
-            radius: 8
-            border.color: "#d8dde8"
-            border.width: 1
 
-            ScrollView {
+            // Empty state: quiet placeholder before the user generates a table.
+            Column {
+                anchors.centerIn: parent
+                spacing: 8
+                visible: !showResult
+
+                Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: qsTr("Result")
+                    color: theme.text
+                    font.pixelSize: 18
+                    font.weight: Font.DemiBold
+                }
+
+                Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: qsTr("No result yet")
+                    color: theme.textMuted
+                    font.pixelSize: 14
+                }
+            }
+
+            // Generated table: header plus scrollable monospace result for clean alignment.
+            ColumnLayout {
                 anchors.fill: parent
-                anchors.margins: 18
-                // clip: true
+                spacing: 14
+                visible: showResult
 
-                TextArea {
-                    id: resultText
-                    readOnly: true
-                    wrapMode: Text.WrapAnywhere
-                    color: "#202124"
-                    font.pixelSize: 20
-                    font.family: "monospace"
-                    background: null
+                Text {
+                    Layout.fillWidth: true
+                    text: inputField.text + qsTr(" times table")
+                    color: theme.text
+                    font.pixelSize: 18
+                    font.weight: Font.Bold
+                    elide: Text.ElideRight
+                }
+
+                Rectangle {
+                    Layout.fillWidth: true
+                    height: 1
+                    color: theme.border
+                }
+
+                ScrollView {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    clip: true
+
+                    TextArea {
+                        id: resultText
+                        readOnly: true
+                        wrapMode: Text.WrapAnywhere
+                        color: theme.text
+                        font.pixelSize: 22
+                        font.family: "monospace"
+                        lineHeight: 1.18
+                        background: null
+                    }
                 }
             }
         }
-
-        Item {
-            Layout.fillHeight: true
-            visible: !showResult
-        }
     }
-
-
 }

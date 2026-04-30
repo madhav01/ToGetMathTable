@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Native Android colors kept in sync with the QML design palette. -->
+    <color name="app_primary">#24439B</color>
+    <color name="app_primary_dark">#1B3278</color>
+    <color name="app_background">#F4F7FB</color>
     <color name="launcher_background">#2563EB</color>
 </resources>

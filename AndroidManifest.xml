@@ -3,7 +3,8 @@
 
     <application
         android:label="To Get Math Table"
-        android:icon="@drawable/icon">
+        android:icon="@drawable/icon"
+        android:theme="@style/AppTheme">
 
         <activity
             android:name="org.qtproject.qt.android.bindings.QtActivity"

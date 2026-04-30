@@ -1,123 +1,167 @@
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Controls.Material
 import QtQuick.Layouts
-ApplicationWindow {
 
+ApplicationWindow {
     id: root
+
+    // Window setup: default phone-sized preview and shared app background.
     width: 390
     height: 720
     visible: true
     title: qsTr("GetMathTable")
-    color: "#f6f7fb"
+    color: theme.appBackground
     Material.theme: Material.Light
 
-    //Top ToolBar (App Bar)
-    header: ToolBar{
-        id:toolBar
-        // 🔷 Background (Material Indigo style)
-        background: Rectangle{
-            color: "#3f51b5"
-        }
-        height: 56//// Standard Android app bar height
-        // 🍔 LEFT: Hamburger menu
-        ToolButton{
-            id:menuButton
-            icon.source: "qrc:/humburggerIcon.png"
-            icon.width: 26
-            icon.height: 26
+    DesignTokens {
+        id: theme
+    }
 
+    // Top app bar: fixed mobile header with centered page title and custom menu icon.
+    header: ToolBar {
+        id: toolBar
+        height: 64
+
+        background: Rectangle {
+            color: theme.primary
+
+            Rectangle {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                height: 1
+                color: "#10245f"
+                opacity: 0.35
+            }
+        }
+
+        // Left menu button: drawn with simple bars so it stays crisp on every density.
+        ToolButton {
+            id: menuButton
+            width: 48
+            height: 48
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            anchors.leftMargin: 12
-            onClicked: drawer.open()//open side menu
+            anchors.leftMargin: 8
+            onClicked: drawer.open()
 
-            background: Rectangle{
-                radius: width/2
-                color: "transparent"
+            contentItem: Item {
+                Repeater {
+                    model: 3
 
-                //subtle press effect
-                opacity: menuButton.pressed?0.15:0
-
-                Behavior on opacity {
-                    NumberAnimation{
-                        duration: 120
+                    Rectangle {
+                        width: 26
+                        height: 3
+                        radius: 2
+                        x: 11
+                        y: 15 + index * 9
+                        color: "white"
+                        opacity: 0.92
                     }
                 }
             }
-        }
-        // Title in center (dynamic based on current page)
-        Label{
-            id: titleLabel
-            text: stackView.currentItem.title//takes title from page
-            anchors.centerIn: parent
-            font.bold: true
-            color: "white"
-            font.pixelSize: 20
-            font.weight: Font.DemiBold
-            opacity: 0.95
 
-            // 🔥 Smooth text change when switching pages
-            Behavior on text {
-                NumberAnimation{
-                    duration: 120
-                }
+            background: Rectangle {
+                radius: width / 2
+                color: menuButton.down ? "#ffffff" : "transparent"
+                opacity: menuButton.down ? 0.16 : 1
             }
         }
-        // }
+
+        // Center title: bound to the active StackView page title.
+        Label {
+            id: titleLabel
+            text: stackView.currentItem ? stackView.currentItem.title : qsTr("Math Table")
+            anchors.centerIn: parent
+            color: "white"
+            font.pixelSize: 21
+            font.weight: Font.Bold
+            opacity: 0.98
+        }
     }
-    //SIDE DRAWER (Menu)
-    Drawer{
-        id:drawer
+
+    // Side drawer: premium navigation surface with selected-page feedback.
+    Drawer {
+        id: drawer
         edge: Qt.LeftEdge
-        width: root.width * 0.7// Drawer width = 70% of screen
+        width: Math.min(root.width * 0.78, 320)
 
+        background: Rectangle {
+            color: theme.surface
+        }
 
-        //vertical menu layout
         Pane {
             anchors.fill: parent
-            spacing: 10
+            padding: 0
+            background: null
 
-            ColumnLayout{
+            ColumnLayout {
                 anchors.fill: parent
-                spacing: 10
+                anchors.margins: 20
+                spacing: 16
 
-                // ---- Menu Item: Math Table ----
-                Button{
-                    text: "Math Table"
+                // Drawer header: simple brand block at the top of the menu.
+                ColumnLayout {
                     Layout.fillWidth: true
+                    spacing: 4
 
-                    onClicked: {
-                        // Replace current page with MathTablePage
-                        stackView.replace("qrc:/MathTablePage.qml")
-                        drawer.close()
+                    Text {
+                        text: qsTr("Get Math Table")
+                        color: theme.text
+                        font.pixelSize: 21
+                        font.weight: Font.Bold
+                    }
+
+                    Text {
+                        text: qsTr("Practice tools")
+                        color: theme.textMuted
+                        font.pixelSize: 13
                     }
                 }
-                Button{
-                    text: "Factorial"
-                    Layout.fillWidth: true
 
-                    onClicked: {
-                        // Replace current page with FactorialPage
-                        stackView.replace("qrc:/FactorialPage.qml")
-                        drawer.close()
+                // Navigation list: each item updates the StackView and closes the drawer.
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    spacing: 8
+
+                    DrawerNavItem {
+                        Layout.fillWidth: true
+                        text: qsTr("Math Table")
+                        iconText: "x"
+                        selected: stackView.currentItem && stackView.currentItem.title === "Math Table"
+
+                        onClicked: {
+                            stackView.replace("qrc:/MathTablePage.qml")
+                            drawer.close()
+                        }
+                    }
+
+                    DrawerNavItem {
+                        Layout.fillWidth: true
+                        text: qsTr("Factorial")
+                        iconText: "n!"
+                        selected: stackView.currentItem && stackView.currentItem.title === "Factorial"
+
+                        onClicked: {
+                            stackView.replace("qrc:/FactorialPage.qml")
+                            drawer.close()
+                        }
                     }
                 }
-                // ---- Future features placeholder ----
-                // We can add more like:
-                // Button { text: "Prime Check" }
+
+                // Spacer keeps navigation pinned near the top on tall phones.
+                Item {
+                    Layout.fillHeight: true
+                }
             }
         }
     }
 
-    //Page Container
-    StackView{
-        id:stackView
-
-        //Fill entire window
+    // Page container: owns the active calculator screen.
+    StackView {
+        id: stackView
         anchors.fill: parent
-
-        // First screen when app opens
         initialItem: "qrc:/MathTablePage.qml"
     }
-
 }
