@@ -1,12 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import ToGetMathTable 1.0
-
 ApplicationWindow {
-    // MathTable {
-    //     id: math
-    // }
 
     id: root
     width: 390
@@ -30,6 +25,7 @@ ApplicationWindow {
                 text: stackView.currentItem.title//takes title from page
                 Layout.fillWidth: true
                 horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
                 font.bold: true
             }
         }
@@ -57,7 +53,7 @@ ApplicationWindow {
 
                     onClicked: {
                         // Replace current page with MathTablePage
-                        stackView.replace("MathTablePage.qml")
+                        stackView.replace("qrc:/MathTablePage.qml")
                         drawer.close()
                     }
                 }
@@ -67,12 +63,12 @@ ApplicationWindow {
 
                     onClicked: {
                         // Replace current page with FactorialPage
-                        stackView.replace("FactorialPage.qml")
+                        stackView.replace("qrc:/FactorialPage.qml")
                         drawer.close()
                     }
                 }
                 // ---- Future features placeholder ----
-                // You can add more like:
+                // We can add more like:
                 // Button { text: "Prime Check" }
             }
         }
@@ -87,7 +83,7 @@ ApplicationWindow {
 
 
         // First screen when app opens
-        initialItem: "MathTablePage.qml"
+        initialItem: "qrc:/MathTablePage.qml"
     }
 
 }
