@@ -129,11 +129,25 @@ Page {
                 }
             }
 
-            // Formatted result layout: clear label, large value, and compact metadata.
+            // Formatted result layout: heading first, then factorial input and value below.
             ColumnLayout {
                 anchors.fill: parent
-                spacing: 12
+                spacing: 14
                 visible: showResult && resultMessage.length === 0
+
+                Text {
+                    Layout.fillWidth: true
+                    text: qsTr("Factorial result")
+                    color: theme.textMuted
+                    font.pixelSize: 14
+                    font.weight: Font.DemiBold
+                }
+
+                Rectangle {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 1
+                    color: theme.border
+                }
 
                 Text {
                     Layout.fillWidth: true
@@ -148,22 +162,9 @@ Page {
                     Layout.fillWidth: true
                     text: factorialValue
                     color: theme.text
-                    font.pixelSize: 34
+                    font.pixelSize: 30
                     font.weight: Font.DemiBold
                     wrapMode: Text.WrapAnywhere
-                }
-
-                Rectangle {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 1
-                    color: theme.border
-                }
-
-                Text {
-                    Layout.fillWidth: true
-                    text: qsTr("Factorial result")
-                    color: theme.textMuted
-                    font.pixelSize: 14
                 }
 
                 Item {
