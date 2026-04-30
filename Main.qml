@@ -18,6 +18,9 @@ ApplicationWindow {
         id: theme
     }
 
+    // Current page name drives the title, drawer selection, and loaded page.
+    property string currentPage: "Math Table"
+
     // Top app bar: fixed mobile header with centered page title and custom menu icon.
     header: ToolBar {
         id: toolBar
@@ -72,7 +75,7 @@ ApplicationWindow {
         // Center title: bound to the active StackView page title.
         Label {
             id: titleLabel
-            text: stackView.currentItem ? stackView.currentItem.title : qsTr("Math Table")
+            text: root.currentPage
             anchors.centerIn: parent
             color: "white"
             font.pixelSize: 21
@@ -129,10 +132,11 @@ ApplicationWindow {
                         Layout.fillWidth: true
                         text: qsTr("Math Table")
                         iconText: "x"
-                        selected: stackView.currentItem && stackView.currentItem.title === "Math Table"
+                        selected: root.currentPage === "Math Table"
 
                         onClicked: {
-                            stackView.replace("qrc:/MathTablePage.qml")
+                            root.currentPage = "Math Table"
+                            pageLoader.sourceComponent = mathTablePageComponent
                             drawer.close()
                         }
                     }
@@ -141,10 +145,11 @@ ApplicationWindow {
                         Layout.fillWidth: true
                         text: qsTr("Factorial")
                         iconText: "n!"
-                        selected: stackView.currentItem && stackView.currentItem.title === "Factorial"
+                        selected: root.currentPage === "Factorial"
 
                         onClicked: {
-                            stackView.replace("qrc:/FactorialPage.qml")
+                            root.currentPage = "Factorial"
+                            pageLoader.sourceComponent = factorialPageComponent
                             drawer.close()
                         }
                     }
@@ -158,10 +163,25 @@ ApplicationWindow {
         }
     }
 
-    // Page container: owns the active calculator screen.
-    StackView {
-        id: stackView
+    // Page components: loaded directly to avoid fragile runtime URL lookup.
+    Component {
+        id: mathTablePageComponent
+
+        MathTablePage {
+        }
+    }
+
+    Component {
+        id: factorialPageComponent
+
+        FactorialPage {
+        }
+    }
+
+    // Page loader: mounts the selected calculator screen below the toolbar.
+    Loader {
+        id: pageLoader
         anchors.fill: parent
-        initialItem: "qrc:/MathTablePage.qml"
+        sourceComponent: mathTablePageComponent
     }
 }

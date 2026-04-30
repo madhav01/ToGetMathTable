@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>MathTablePage.qml</file>
-        <file>FactorialPage.qml</file>
         <file>humburggerIcon.png</file>
     </qresource>
 </RCC>

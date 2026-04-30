@@ -6,7 +6,6 @@ import ToGetMathTable 1.0
 Page {
     id: root
     title: "Math Table"
-    color: theme.appBackground
 
     // Backend object that generates the multiplication table text.
     MathTable {
@@ -19,6 +18,11 @@ Page {
 
     // Screen state: controls whether the result card shows data or an empty state.
     property bool showResult: false
+
+    // Page background: Controls Page uses background, not a direct color property.
+    background: Rectangle {
+        color: theme.appBackground
+    }
 
     // Main page layout: input, actions, and result surface.
     ColumnLayout {
@@ -116,7 +120,7 @@ Page {
 
                 Rectangle {
                     Layout.fillWidth: true
-                    height: 1
+                    Layout.preferredHeight: 1
                     color: theme.border
                 }
 
@@ -132,7 +136,6 @@ Page {
                         color: theme.text
                         font.pixelSize: 22
                         font.family: "monospace"
-                        lineHeight: 1.18
                         background: null
                     }
                 }

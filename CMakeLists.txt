@@ -22,6 +22,8 @@ qt_add_qml_module(appToGetMathTable
     VERSION 1.0
     QML_FILES
         Main.qml
+        MathTablePage.qml
+        FactorialPage.qml
         DesignTokens.qml
         PremiumButton.qml
         PremiumTextField.qml

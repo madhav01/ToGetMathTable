@@ -6,7 +6,6 @@ import ToGetMathTable 1.0
 Page {
     id: root
     title: "Factorial"
-    color: theme.appBackground
 
     // Backend object that performs the factorial calculation.
     MathTable {
@@ -22,6 +21,11 @@ Page {
     property string factorialInput: ""
     property string factorialValue: ""
     property string resultMessage: ""
+
+    // Page background: Controls Page uses background, not a direct color property.
+    background: Rectangle {
+        color: theme.appBackground
+    }
 
     // Formats long numeric results with commas for better readability.
     function formatNumber(value) {
@@ -151,7 +155,7 @@ Page {
 
                 Rectangle {
                     Layout.fillWidth: true
-                    height: 1
+                    Layout.preferredHeight: 1
                     color: theme.border
                 }
 
