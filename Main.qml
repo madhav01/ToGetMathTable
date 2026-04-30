@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Controls
-// import QtQuick.Controls.Material
 import QtQuick.Layouts
 ApplicationWindow {
 
@@ -14,25 +13,57 @@ ApplicationWindow {
 
     //Top ToolBar (App Bar)
     header: ToolBar{
-        // RowLayout used for proper spacing/alignment
-        RowLayout{
-            anchors.fill: parent
-            // 🍔 Hamburger menu button
-            ToolButton{
-                icon.source: "qrc:/humburggerIcon.png"
-                icon.width: 24
-                icon.height: 24
-                onClicked: drawer.open()//open side menu
-            }
-            // Title in center (dynamic based on current page)
-            Label{
-                text: stackView.currentItem.title//takes title from page
-                Layout.fillWidth: true
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                font.bold: true
+        id:toolBar
+        // 🔷 Background (Material Indigo style)
+        background: Rectangle{
+            color: "#3f51b5"
+        }
+        height: 56//// Standard Android app bar height
+        // 🍔 LEFT: Hamburger menu
+        ToolButton{
+            id:menuButton
+            icon.source: "qrc:/humburggerIcon.png"
+            icon.width: 26
+            icon.height: 26
+
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.leftMargin: 12
+            onClicked: drawer.open()//open side menu
+
+            background: Rectangle{
+                radius: width/2
+                color: "transparent"
+
+                //subtle press effect
+                opacity: menuButton.pressed?0.15:0
+
+                Behavior on opacity {
+                    NumberAnimation{
+                        duration: 120
+                    }
+                }
             }
         }
+        // Title in center (dynamic based on current page)
+        Label{
+            id: titleLabel
+            text: stackView.currentItem.title//takes title from page
+            anchors.centerIn: parent
+            font.bold: true
+            color: "white"
+            font.pixelSize: 20
+            font.weight: Font.DemiBold
+            opacity: 0.95
+
+            // 🔥 Smooth text change when switching pages
+            Behavior on text {
+                NumberAnimation{
+                    duration: 120
+                }
+            }
+        }
+        // }
     }
     //SIDE DRAWER (Menu)
     Drawer{
@@ -84,7 +115,6 @@ ApplicationWindow {
 
         //Fill entire window
         anchors.fill: parent
-
 
         // First screen when app opens
         initialItem: "qrc:/MathTablePage.qml"
