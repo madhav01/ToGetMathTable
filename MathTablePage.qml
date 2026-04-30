@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import ToGetMathTable 1.0
 
 Page{
+    id:root
     title: "Math Table"
 
     MathTable {
@@ -16,14 +17,6 @@ Page{
         anchors.fill: parent
         anchors.margins: root.pageMargin
         spacing: 18
-
-        Label {
-            text: qsTr("Math Table")
-            color: "#202124"
-            font.pixelSize: 30
-            font.bold: true
-            Layout.fillWidth: true
-        }
 
         TextField {
             id: inputField
@@ -45,7 +38,11 @@ Page{
                 Layout.fillWidth: true
                 Layout.preferredHeight: 48
                 onClicked: {
-                    math.generateTable(inputField.text)
+                    if (inputField.text.length === 0) {
+                        showResult = false
+                        return
+                    }
+                    resultText.text = math.generateTable(inputField.text)
                     showResult = true
                 }
             }
@@ -57,6 +54,7 @@ Page{
                 Layout.preferredHeight: 48
                 onClicked: {
                     inputField.clear()
+                    resultText.text=""
                     showResult = false
                 }
             }
@@ -74,13 +72,12 @@ Page{
             ScrollView {
                 anchors.fill: parent
                 anchors.margins: 18
-                clip: true
+                // clip: true
 
                 TextArea {
                     id: resultText
-                    text: math.result
                     readOnly: true
-                    wrapMode: Text.NoWrap
+                    wrapMode: Text.WrapAnywhere
                     color: "#202124"
                     font.pixelSize: 20
                     font.family: "monospace"

@@ -3,19 +3,11 @@
 MathTable::MathTable(QObject *parent)
     : QObject{parent}
 {}
-QString MathTable::result()const
-{
-    return m_result;
-}
-void MathTable::generateTable(const QString &input){
+QString MathTable::generateTable(const QString &input){
     bool ok;
     int num = input.toInt(&ok);
 
-    if(!ok){
-        m_result = "Invalid input!";
-        emit resultChanged();
-        return;
-    }
+    if(!ok)return "Invalid input!";
     QString table;
 
     for(int i{1};i<=10;++i){
@@ -23,9 +15,15 @@ void MathTable::generateTable(const QString &input){
                  QString::number(i)+" = "+
                  QString::number(num*i)+"\n";
     }
-    m_result = table;
-    emit resultChanged();
+    return table;
 }
 QString MathTable::factorial(const QString &input){
+    bool ok;
+    int num=input.toInt(&ok);
 
+    if(!ok||num<0)return "Invalid input!";
+
+    long long fact=1;
+    for(int i{1};i<=num;++i)fact*=i;
+    return "Factorial of "+QString::number(num)+" = "+QString::number(fact);
 }

@@ -9,16 +9,11 @@ class MathTable : public QObject
 {
     Q_OBJECT
     QML_ELEMENT
-    Q_PROPERTY(QString result READ result NOTIFY resultChanged)
 public:
     explicit MathTable(QObject *parent = nullptr);
-    Q_INVOKABLE void generateTable(const QString &input);
-    QString result()const;
 
-signals:
-    void resultChanged();
-private:
-    QString m_result;
+    Q_INVOKABLE QString generateTable(const QString &input);
+    Q_INVOKABLE QString factorial(const QString &input);
 };
 
 #endif // MATHTABLE_H
