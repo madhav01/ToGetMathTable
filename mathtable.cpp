@@ -22,6 +22,7 @@ QString MathTable::factorial(const QString &input){
     int num=input.toInt(&ok);
 
     if(!ok||num<0)return "Invalid input!";
+    if (num > 20)return "Limit exceeded (max 20)";
 
     long long fact=1;
     for(int i{1};i<=num;++i)fact*=i;
