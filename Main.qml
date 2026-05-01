@@ -153,6 +153,18 @@ ApplicationWindow {
                             drawer.close()
                         }
                     }
+                    DrawerNavItem {
+                        Layout.fillWidth: true
+                        text: qsTr("Prime Number")
+                        iconText: "P"
+                        selected: root.currentPage === "Prime Number"
+
+                        onClicked: {
+                            root.currentPage = "Prime Number"
+                            pageLoader.sourceComponent = primePageComponent
+                            drawer.close()
+                        }
+                    }
                 }
 
                 // Spacer keeps navigation pinned near the top on tall phones.
@@ -175,6 +187,13 @@ ApplicationWindow {
         id: factorialPageComponent
 
         FactorialPage {
+        }
+    }
+    Component {
+        id: primePageComponent
+
+        PrimePage{
+
         }
     }
 

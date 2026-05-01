@@ -29,6 +29,7 @@ qt_add_qml_module(appToGetMathTable
         PremiumTextField.qml
         ResultCard.qml
         DrawerNavItem.qml
+        PrimePage.qml
         SOURCES mathtable.h mathtable.cpp
         RESOURCES icon.qrc
 )

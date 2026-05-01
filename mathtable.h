@@ -14,6 +14,7 @@ public:
 
     Q_INVOKABLE QString generateTable(const QString &input);
     Q_INVOKABLE QString factorial(const QString &input);
+    Q_INVOKABLE QString isPrime(const QString &input);
 };
 
 #endif // MATHTABLE_H

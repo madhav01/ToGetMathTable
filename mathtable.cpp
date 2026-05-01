@@ -28,3 +28,14 @@ QString MathTable::factorial(const QString &input){
     for(int i{1};i<=num;++i)fact*=i;
     return "Factorial of "+QString::number(num)+" = "+QString::number(fact);
 }
+QString MathTable::isPrime(const QString &input){
+    bool ok;
+    int num=input.toInt(&ok);
+    if(!ok)return "Invalid input!";
+    if(num<2)return QString::number(num)+" is not a prime number";
+
+    for(int i=2;i<=num/i;++i){
+        if(num%i==0)return QString::number(num)+" is not a prime number";
+    }
+    return QString::number(num)+" is a prime number";
+}
